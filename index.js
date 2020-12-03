@@ -1,5 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import mongodb from 'mongodb';
+const { MongoClient } = mongodb;
 
 
 import fs from 'fs';
@@ -8,7 +10,7 @@ import http from 'http';
 
 import appSrc from './app.js';
 
-const app = appSrc(express, bodyParser, fs, crypto, http);
+const app = appSrc(express, bodyParser, fs, crypto, http, MongoClient);
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
