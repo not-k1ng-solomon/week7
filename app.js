@@ -1,4 +1,4 @@
-export default (express, bodyParser, fs, crypto, http) => {
+export default (express, bodyParser, fs, crypto, http, MongoClient) => {
     const app = express();
 
     app.use(bodyParser.json());
@@ -11,30 +11,30 @@ export default (express, bodyParser, fs, crypto, http) => {
 
 
     app
-//         .post('/insert/', async (req, res) => {
-//             const {login, password, URL} = req.body;
+        .post('/insert/', async (req, res) => {
+            const {login, password, URL} = req.body;
 
-//             console.log(URL);
+            console.log(URL);
 
-//             const client = new MongoClient(URL);
+            const client = new MongoClient(URL);
 
-//             try {
-//                 await client.connect();
+            try {
+                await client.connect();
 
-//                 const database = client.db('mongodemo');
-//                 const collection = database.collection('users');
-//                 const doc = { login: login, password: password };
-//                 const result = await collection.insertOne(doc);
+                const database = client.db('mongodemo');
+                const collection = database.collection('users');
+                const doc = { login: login, password: password };
+                const result = await collection.insertOne(doc);
 
-//             } catch(error) {
-//                 console.log(error);
-//             } finally {
-//                 await client.close();
-//             }
+            } catch(error) {
+                console.log(error);
+            } finally {
+                await client.close();
+            }
 
-//             res.status(200).end();
-        
-//         })
+            res.status(200).end();
+
+        })
         .get('/login/', (req, res) => res.send('davlet'))
         .get('/code/', (req, res) => fs.createReadStream(import.meta.url.substring(7)).pipe(res))
         .get('/sha1/:input/', (req, res) => {
